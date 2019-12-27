@@ -5,6 +5,9 @@ const LoginStyled = styled.div`
   margin-left: 72%;
     div {
       padding-right: 10px;
+      p {
+        color: #FBEEEA;
+      }
     }
 `
 
