@@ -5,10 +5,7 @@ function Login() {
   return(
     <LoginStyled className="space--log">
       <div className="space--log--sign--up">
-        <p>Sign up</p>
-      </div>
-      <div className="space--log--sign--in">
-        <p>Sign in</p>
+        <p>Log in</p>
       </div>
     </LoginStyled>
   )
