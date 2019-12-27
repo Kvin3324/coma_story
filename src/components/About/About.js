@@ -4,8 +4,9 @@ function About() {
   return(
     <div className="about mt-5">
       <p>
-        You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder.
-        After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide...
+      <strong>"Toute ressemblance avec des personnes existantes ou ayant existé est purement fortuite."</strong> Enfin ceci ne tient qu'à vous... 😉 <br/>
+      Si vous avez passé une mauvaise journée, pensez à toutes ces personnes qui ont vécu (ou pas), ce genre de moment et qui auraient voulu que ceci ne se soit jamais passé...
+        Libre à vous de nous faire partager des moments de gêne ou autre, ou bien essayez de faire passer ce moment sous forme fictive ?
       </p>
     </div>
   )
