@@ -8,6 +8,10 @@ const LoginStyled = styled.div`
       p {
         color: #FBEEEA;
       }
+      a {
+        text-decoration: none;
+        color: white;
+      }
     }
 `
 
