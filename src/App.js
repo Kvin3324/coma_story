@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import About from './components/About/About';
 import Feed from './container/Feed/Feed';
 import { Route, BrowserRouter } from "react-router-dom";
-import SpaceLog from './components/Login/SpaceLog';
+import SpaceLog from './components/Login/SpaceLog/SpaceLog';
 
 function App() {
   return (

@@ -7,7 +7,7 @@ function Feed() {
 
   useEffect(() => {
     fetch("http://localhost:3000/comaStories")
-    .then(response => response.json())
+    .then(response => (response.json()))
     .then(dataParsed => setData([...dataParsed] ))
     .catch(error => alert(error))
   }, [])

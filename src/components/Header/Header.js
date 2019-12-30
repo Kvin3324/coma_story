@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderStyled from "./HeaderStyled.style";
-import Login from "../Login/Login";
+import Login from "../Login/Login/Login";
 
 function Header() {
   return(
