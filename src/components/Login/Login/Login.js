@@ -6,7 +6,8 @@ function Login() {
   return(
     <LoginStyled className="space--log">
       <div className="space--log--sign--up">
-        <Link to={"/logIn"} > Log in </Link>
+        <Link to={"/logIn"} > S'inscrire </Link>
+        <Link to={"/connection"} > Se connecter </Link>
       </div>
     </LoginStyled>
   )
