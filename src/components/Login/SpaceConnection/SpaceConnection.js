@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
 import SpaceLogStyled from "../SpaceLog/SpaceLogStyled.style";
 import { Redirect } from "react-router-dom";
+import store from "../../../redux/store";
 
 function SpaceConnection() {
   const [data, setData] = useState({
@@ -23,6 +24,8 @@ function SpaceConnection() {
     if (data.users.find(user => user.mail === inputMail.current.value && user.password === inputPsw.current.value)) {
       const newState = {...data};
       newState.redirectionConnection = true;
+      store.dispatch({type: "USER_CONNECTED"});
+      sessionStorage.setItem("mail", `${inputMail.current.value}`)
       setData(newState);
     }
   }
