@@ -14,7 +14,7 @@ function App() {
       <Header />
       <Route exact path="/logIn" component={SpaceLog} />
       <Route exact path="/connection" component={SpaceConnection} />
-        <div className="container">
+        <div className="container col-12">
           <Route exact path="/" component={About}  ></Route>
           <Route exact path="/" component={Feed}  ></Route>
         </div>
