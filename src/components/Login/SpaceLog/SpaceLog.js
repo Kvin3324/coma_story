@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import SpaceLogStyled from "./SpaceLogStyled.style";
 import { Redirect } from "react-router-dom";
+import store from "../../../redux/store";
 
 function SpaceLog() {
   const [data, setData] = useState({
@@ -33,6 +34,7 @@ function SpaceLog() {
               shwoNotif: false
             })
             )
+            store.dispatch({type: "USER_CONNECTED"});
             sessionStorage.setItem("mail", `${emailValue.current.value}`)
         } else {
           const newState = { ...data };
@@ -47,7 +49,7 @@ function SpaceLog() {
 
   return (
     <React.Fragment>
-      <SpaceLogStyled className="space--log mt-5">
+      <SpaceLogStyled className="space--log">
         <h1 className="mb-5">Inscription:</h1>
         <div className="space--log--mail">
           <label htmlFor="mail" className="mr-4" >Email:</label>
@@ -58,7 +60,7 @@ function SpaceLog() {
           <input type="password" id="password" className="form-group" name="password" ref={pswValue} required />
         </div>
         <div className="space--log--submit">
-          <button className="btn btn-primary" onClick={checkLogs} >Sign in</button>
+          <button className="btn btn-primary" onClick={checkLogs}>Inscription</button>
           {
             function () {
               if (data.showNotif === true) {
