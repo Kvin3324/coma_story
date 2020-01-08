@@ -1,16 +1,16 @@
 import React from "react";
+import LogoutStyled from "./LogoutStyled.style";
 
 function Logout() {
   function clearSession() {
     sessionStorage.clear();
     document.location.reload(true);
-    console.log(sessionStorage);
   }
 
   return(
-    <div className="space--log--logout">
+    <LogoutStyled className="space--log--logout">
       <button onClick={clearSession}>Logout</button>
-    </div>
+    </LogoutStyled>
   )
 }
 
