@@ -3,6 +3,7 @@ import FeedCard from "../../components/FeedCard/FeedCard";
 import FeedStyled from "./FeedStyled.style";
 import ButtonAddStyled from "./Style/ButtonAddStyled.style";
 import AddComa from "../../components/AddComa/AddComa";
+import store from "../../redux/store";
 
 function Feed() {
   const [data, setData] = useState({
@@ -75,7 +76,7 @@ function Feed() {
   if (data.data.length === 0) return "loading";
 
   if (data.data.length !== 0) {
-    if (sessionStorage.mail) {
+    if (sessionStorage.mail && store.getState() === true) {
       return (
         <React.Fragment>
           <div className="alert alert-warning alert-dismissible fade show mt-5" role="alert">
