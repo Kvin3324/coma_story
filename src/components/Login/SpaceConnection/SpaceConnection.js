@@ -38,7 +38,7 @@ function SpaceConnection() {
 
   return (
     <React.Fragment>
-      <SpaceLogStyled className="space--log mt-5">
+      <SpaceLogStyled className="space--log">
         <h1 className="mb-5">Connexion:</h1>
         <div className="space--log--mail">
           <label htmlFor="mail" className="mr-4">Email:</label>
