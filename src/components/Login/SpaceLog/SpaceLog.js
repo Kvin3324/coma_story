@@ -33,7 +33,7 @@ function SpaceLog() {
               shwoNotif: false
             })
             )
-            localStorage.setItem("mail", `${emailValue.current.value}`)
+            sessionStorage.setItem("mail", `${emailValue.current.value}`)
         } else {
           const newState = { ...data };
 
