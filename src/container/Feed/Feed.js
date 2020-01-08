@@ -25,7 +25,7 @@ function Feed() {
   }, [])
 
   console.log(data);
-  console.log(localStorage);
+  console.log(sessionStorage);
 
   function togglePopup() {
     const newState = {...data};
@@ -75,7 +75,7 @@ function Feed() {
   if (data.data.length === 0) return "loading";
 
   if (data.data.length !== 0) {
-    if (localStorage.mail) {
+    if (sessionStorage.mail) {
       return (
         <React.Fragment>
           <div className="alert alert-warning alert-dismissible fade show mt-5" role="alert">
