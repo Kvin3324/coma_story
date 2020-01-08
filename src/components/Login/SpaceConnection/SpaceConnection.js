@@ -6,7 +6,8 @@ import store from "../../../redux/store";
 function SpaceConnection() {
   const [data, setData] = useState({
     users: [],
-    redirectionConnection: false
+    redirectionConnection: false,
+    showNotif: false
   })
   const inputMail = useRef(null);
   const inputPsw = useRef(null);
@@ -26,6 +27,11 @@ function SpaceConnection() {
       newState.redirectionConnection = true;
       store.dispatch({type: "USER_CONNECTED"});
       sessionStorage.setItem("mail", `${inputMail.current.value}`)
+      setData(newState);
+    } else {
+      const newState = {...data};
+
+      newState.showNotif = true;
       setData(newState);
     }
   }
@@ -48,6 +54,13 @@ function SpaceConnection() {
             function () {
               if (data.redirectionConnection === true) {
                 return <Redirect to="/" />
+              }
+              if (data.showNotif === true) {
+                return (
+                  <div className="alert alert-danger mt-4" role="alert">
+                    <p>Aucun compte n'existe ! Veuillez utiliser un compte existant ou vous inscrire.</p>
+                  </div>
+                )
               }
             }()
           }
