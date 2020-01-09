@@ -3,7 +3,7 @@ import SpaceLogStyled from "./SpaceLogStyled.style";
 import { Redirect } from "react-router-dom";
 import store from "../../../redux/store";
 
-function SpaceLog() {
+function SpaceLog(props) {
   const [data, setData] = useState({
     users: [],
     redirection: false,
@@ -24,18 +24,24 @@ function SpaceLog() {
             },
             body: JSON.stringify({
               mail: emailValue.current.value,
-              password: pswValue.current.value
+              password: pswValue.current.value,
+              yourStories: []
             })
           })
             .then(response => response.json())
-            .then(parsedData => setData({
-              users: dataParsed,
-              redirection: true,
-              shwoNotif: false
-            })
+            .then( newUser => {
+              // setData({
+              //   users: dataParsed,
+              //   redirection: true,
+              //   shwoNotif: false
+              // })
+              // return <Redirect to="/" />
+              sessionStorage.isConnected = true;
+              store.dispatch({type: "USER_CONNECTED", userId: newUser.id})
+              props.history.push("/");
+              props.history.goForward();
+              }
             )
-            store.dispatch({type: "USER_CONNECTED"});
-            sessionStorage.setItem("mail", `${emailValue.current.value}`)
         } else {
           const newState = { ...data };
 
