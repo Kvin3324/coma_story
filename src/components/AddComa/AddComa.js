@@ -12,13 +12,13 @@ function AddComa(props) {
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <label htmlFor="title" className="mr-4" >Titre:</label>
-              <input type="title" id="title" className="form-group" size="30" onChange={props.inputTitle} required />
+              <input type="title" id="title" className="form-group" size="30" value={props.titleStory} onChange={props.inputTitle} required />
             </div>
           </div>
           <div className="input-group">
             <div className="input-group-prepend">
               <label htmlFor="coma--desc" className="mr-3">Coma:</label>
-              <textarea id="coma--desc"  size="30" style={{height: "25vh", width: "25vw"}} onChange={props.inputContent} required />
+              <textarea id="coma--desc"  size="30" style={{height: "25vh", width: "25vw"}} value={props.contentStory} onChange={props.inputContent} required />
             </div>
           </div>
         </div>
