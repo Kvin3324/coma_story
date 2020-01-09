@@ -10,112 +10,127 @@ function Feed() {
     data: [],
     showPopup: false,
     titleStory: "",
-    contentStory: "",
+    contentStory: ""
   });
 
+  const [storeFeed, setStoreFeed] = useState(store.getState());
+  store.subscribe(() => setStoreFeed(store.getState()));
+
+
   useEffect(() => {
+    const newState = { ...data };
+
     fetch("http://localhost:3000/comaStories")
       .then(response => (response.json()))
-      .then(dataParsed => setData({
-        data: dataParsed,
-        showPopup: false,
-        titleStory: "",
-        contentStory: ""
-      }))
+      .then(dataParsed => {
+        newState.data = dataParsed
+        setData(newState)
+      })
       .catch(error => alert(error))
   }, [])
 
   console.log(data);
-  console.log(sessionStorage);
 
   function togglePopup() {
-    const newState = {...data};
+    const newState = { ...data };
 
     newState.showPopup = !data.showPopup;
     setData(newState);
   }
 
   function inputTitle(e) {
-    const newState = {...data};
+    const newState = { ...data };
     newState.titleStory = e.target.value;
 
     setData(newState);
   }
 
   function inputContent(e) {
-    const newState = {...data};
+    const newState = { ...data };
     newState.contentStory = e.target.value;
 
     setData(newState);
   }
 
   function postComa() {
-    fetch("http://localhost:3000/comaStories", {
+    fetch(`http://localhost:3000/comaStories`, {
       method: "POST",
       headers: {
         "Content-type": "application/json"
       },
       body: JSON.stringify({
         title: data.titleStory,
-        content: data.contentStory
+        content: data.contentStory,
+        authorId: storeFeed.userId
       })
     })
-    .then(response => console.log(response.json()))
-    .then(dataParsed => {
-      fetch("http://localhost:3000/comaStories")
       .then(response => response.json())
-      .then(parsedData => setData({
-        data: parsedData,
-        showPopup: false,
-        titleStory: "",
-        contentStory: ""
-      }))
-    })
+      .then(dataParsed => {
+        fetch("http://localhost:3000/comaStories")
+          .then(response => response.json())
+          .then(parsedData => setData({
+            data: parsedData,
+            showPopup: false,
+            titleStory: "",
+            contentStory: ""
+          }))
+      })
+  }
+
+  function editStory(e) {
+    console.log(e.target.nextSibling.querySelector("h2").textContent   );
+    console.log(e.target.nextSibling.querySelector("p").textContent   );
+    
+
+    const newState = { ...data };
+    newState.showPopup = !data.showPopup;
+
+    newState.titleStory = e.target.nextSibling.querySelector("h2").textContent;
+    console.log(newState.titleStory);
+    
+    newState.contentStory = e.target.nextSibling.querySelector("p").textContent;
+    console.log(newState.contentStory);
+
+
+    setData(newState)
   }
 
   if (data.data.length === 0) return "loading";
 
   if (data.data.length !== 0) {
-    if (sessionStorage.mail && store.getState() === true) {
-      return (
-        <React.Fragment>
-          <div className="alert alert-warning alert-dismissible fade show mt-5" role="alert">
-            Vous êtes maintenant connecté !
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <ButtonAddStyled className="btn--add">
-            <button className="btn btn-primary" onClick={togglePopup}>Soumettre un Coma</button>
-          </ButtonAddStyled>
-          {
-            function () {
-              if (data.showPopup === true) {
-                return(
-                  <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} addComaDb={postComa} />
-                )
-              }
-            }()
-          }
+
+    return (
+      <React.Fragment>
+        {
+          sessionStorage.isConnected &&
+          <React.Fragment>
+            <div className="alert alert-warning alert-dismissible fade show mt-5" role="alert">
+              Vous êtes maintenant connecté !
+                  <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <ButtonAddStyled className="btn--add">
+              <button className="btn btn-primary" onClick={togglePopup}>Soumettre un Coma</button>
+            </ButtonAddStyled>
+            {
+              data.showPopup && <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} />
+            }
+          </React.Fragment>
+        }
+        <div className="row">
           {
             data.data.map((card, index) => {
               return (
-                <FeedStyled className="feed-cards" key={index}>
-                  <FeedCard data={card} />
+                <FeedStyled className="col-lg-4 feed-cards" key={index}>
+                  <FeedCard data={card} editStory={editStory} />
                 </FeedStyled>
               )
             })
           }
-        </React.Fragment>
-      )
-    }
-    return data.data.map((card, index) => {
-      return (
-        <FeedStyled className="feed-cards" key={index}>
-          <FeedCard data={card} />
-        </FeedStyled>
-      )
-    })
+        </div>
+      </React.Fragment>
+    )
   }
 }
 
