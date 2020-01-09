@@ -1,10 +1,16 @@
 import {createStore} from "redux";
 
-const userConnection = false;
+const appState = {
+  userId: null
+};
 
-function connection(state = userConnection, action) {
+function connection(state = appState, action) {
+  const newState = {...state};
+
   if (action.type === "USER_CONNECTED") {
-    return state = true;
+    // newState.isConnected = true;
+    newState.userId = action.userId;
+    return newState;
   }
   return state;
 }
