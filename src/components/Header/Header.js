@@ -9,19 +9,14 @@ function Header() {
   const [data, setData] = useState(store.getState());
   store.subscribe(() => setData(store.getState()));
 
+  console.log(data);
+
   return(
     <header>
       <HeaderStyled className="header--title">
         <h1 className="pt-4 pl-5">#COMA</h1>
         {
-          function () {
-            if (store.getState() === false) {
-              return <Login />
-            }
-            if (store.getState() === true) {
-              return <Logout />
-            }
-          }()
+          sessionStorage.isConnected ? <Logout /> : <Login />
         }
       </HeaderStyled>
     </header>
