@@ -22,11 +22,15 @@ function SpaceConnection() {
   }, [])
 
   function checkAccount() {
-    if (data.users.find(user => user.mail === inputMail.current.value && user.password === inputPsw.current.value)) {
+    const user = data.users.find(user => user.mail === inputMail.current.value && user.password === inputPsw.current.value);
+
+    if (user !== undefined) {
       const newState = {...data};
+
       newState.redirectionConnection = true;
-      store.dispatch({type: "USER_CONNECTED"});
-      sessionStorage.setItem("mail", `${inputMail.current.value}`)
+      store.dispatch({type: "USER_CONNECTED", userId: user.id});
+      sessionStorage.setItem("isConnected", true);
+
       setData(newState);
     } else {
       const newState = {...data};
