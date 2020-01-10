@@ -9,8 +9,6 @@ function Header() {
   const [data, setData] = useState(store.getState());
   store.subscribe(() => setData(store.getState()));
 
-  console.log(data);
-
   return(
     <header>
       <HeaderStyled className="header--title">
