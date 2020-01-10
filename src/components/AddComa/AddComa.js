@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import AddComaStyled from "./AddcomaStyled.style";
+import store from "../../redux/store";
 
 function AddComa(props) {
+  const [dataStore, setDataStore] = useState(store.getState());
+
   return (
     <React.Fragment>
       <AddComaStyled>
@@ -22,7 +25,12 @@ function AddComa(props) {
             </div>
           </div>
         </div>
-        <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button>
+        {
+          dataStore.editStory === true ?
+          <button className="btn btn-primary"  >Editer</button> :
+          <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button>
+        }
+        {/* <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button> */}
       </AddComaStyled>
     </React.Fragment>
   )
