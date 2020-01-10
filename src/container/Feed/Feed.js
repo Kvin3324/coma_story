@@ -30,11 +30,20 @@ function Feed() {
   }, [])
 
   console.log(data);
+  console.log(storeFeed);
+
 
   function togglePopup() {
     const newState = { ...data };
+    const newStore = {...storeFeed};
 
     newState.showPopup = !data.showPopup;
+
+    if (storeFeed.editStory === true) {
+      newStore.editStory = false;
+    }
+
+    setStoreFeed(newStore);
     setData(newState);
   }
 
@@ -78,18 +87,12 @@ function Feed() {
   }
 
   function editStory(e) {
-    console.log(e.target.nextSibling.querySelector("h2").textContent   );
-    console.log(e.target.nextSibling.querySelector("p").textContent   );
-    
-
     const newState = { ...data };
     newState.showPopup = !data.showPopup;
+    store.dispatch({type: "EDIT_STORY"});
 
     newState.titleStory = e.target.nextSibling.querySelector("h2").textContent;
-    console.log(newState.titleStory);
-    
     newState.contentStory = e.target.nextSibling.querySelector("p").textContent;
-    console.log(newState.contentStory);
 
 
     setData(newState)
@@ -115,6 +118,8 @@ function Feed() {
             </ButtonAddStyled>
             {
               data.showPopup && <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} />
+              // <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} />
+              // <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} addComaDb={postComa} />
             }
           </React.Fragment>
         }
