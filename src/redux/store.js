@@ -12,10 +12,17 @@ function connection(state = appState, action) {
     newState.userId = action.userId;
     return newState;
   }
+
   if (action.type === "EDIT_STORY") {
     newState.editStory = true;
     return newState;
   }
+
+  if (action.type === "ADD_STORY") {
+    newState.editStory = false;
+    return newState;
+  }
+
   return state;
 }
 
