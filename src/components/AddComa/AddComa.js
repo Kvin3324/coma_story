@@ -4,6 +4,7 @@ import store from "../../redux/store";
 
 function AddComa(props) {
   const [dataStore, setDataStore] = useState(store.getState());
+  store.subscribe(() => setDataStore(store.getState()));
 
   return (
     <React.Fragment>
@@ -26,11 +27,10 @@ function AddComa(props) {
           </div>
         </div>
         {
-          dataStore.editStory === true ?
-          <button className="btn btn-primary"  >Editer</button> :
-          <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button>
+          !dataStore.editStory ?
+            <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button>:
+            <button className="btn btn-primary">Editer</button>
         }
-        {/* <button className="btn btn-primary" onClick={props.addComaDb}>Ajouter</button> */}
       </AddComaStyled>
     </React.Fragment>
   )
