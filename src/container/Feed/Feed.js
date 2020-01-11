@@ -33,17 +33,22 @@ function Feed() {
   console.log(storeFeed);
 
 
-  function togglePopup() {
+  function togglePopup(e) {
     const newState = { ...data };
-    const newStore = {...storeFeed};
 
     newState.showPopup = !data.showPopup;
 
-    if (storeFeed.editStory === true) {
-      newStore.editStory = false;
+    if (e.target.nodeName === "BUTTON") {
+      store.dispatch({type: "ADD_STORY"})
     }
 
-    setStoreFeed(newStore);
+    if (e.target.nodeName === "I") {
+      store.dispatch({type: "EDIT_STORY"});
+
+      newState.titleStory = e.target.nextSibling.querySelector("h2").textContent;
+      newState.contentStory = e.target.nextSibling.querySelector("p").textContent;
+    }
+
     setData(newState);
   }
 
@@ -86,18 +91,6 @@ function Feed() {
       })
   }
 
-  function editStory(e) {
-    const newState = { ...data };
-    newState.showPopup = !data.showPopup;
-    store.dispatch({type: "EDIT_STORY"});
-
-    newState.titleStory = e.target.nextSibling.querySelector("h2").textContent;
-    newState.contentStory = e.target.nextSibling.querySelector("p").textContent;
-
-
-    setData(newState)
-  }
-
   if (data.data.length === 0) return "loading";
 
   if (data.data.length !== 0) {
@@ -117,9 +110,13 @@ function Feed() {
               <button className="btn btn-primary" onClick={togglePopup}>Soumettre un Coma</button>
             </ButtonAddStyled>
             {
-              data.showPopup && <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} />
-              // <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} />
-              // <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} addComaDb={postComa} />
+              function () {
+                if (data.showPopup) {
+                  return storeFeed.editStory ?
+                  <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} titleStory={data.titleStory} contentStory={data.contentStory} addComaDb={postComa} /> :
+                  <AddComa closePopup={togglePopup} inputTitle={e => inputTitle(e)} inputContent={e => inputContent(e)} addComaDb={postComa} />
+                }
+              }()
             }
           </React.Fragment>
         }
@@ -128,7 +125,7 @@ function Feed() {
             data.data.map((card, index) => {
               return (
                 <FeedStyled className="col-lg-4 feed-cards" key={index}>
-                  <FeedCard data={card} editStory={editStory} />
+                  <FeedCard data={card} editStory={togglePopup} />
                 </FeedStyled>
               )
             })
